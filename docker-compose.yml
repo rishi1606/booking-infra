@@ -1,0 +1,39 @@
+# Defines the services that make up your application
+services:
+  # Defines a service named 'mysql'
+  mysql:
+    # Specifies the Docker image to use for this service (MySQL version 8.0)
+    image: mysql:8.0
+    # Assigns a custom name to the container instead of a generated one
+    container_name: booking-mysql
+    # Configures the restart policy to always restart the container unless manually stopped
+    restart: unless-stopped
+    # Sets environment variables for the MySQL container
+    environment:
+      # Sets the root password for the MySQL server
+      MYSQL_ROOT_PASSWORD: rootpassword
+      # Creates a database named 'booking_auth' on startup
+      MYSQL_DATABASE: booking_auth
+      # Creates a user named 'booking_user' with access to the database
+      MYSQL_USER: booking_user
+      # Sets the password for the 'booking_user'
+      MYSQL_PASSWORD: booking_password
+    # Maps ports between the host machine and the container
+    ports:
+      # Maps port 3306 on the host (left) to port 3306 on the container (right)
+      - "3307:3306"
+    # Mounts a volume to persist database data
+    volumes:
+      # Mounts the named volume 'mysql_data' to the MySQL data directory inside the container
+      - mysql_data:/var/lib/mysql
+
+# Defines named volumes that can be used by services to persist data
+volumes:
+  # Declares a named volume called 'mysql_data' (Docker manages its location on the host)
+  mysql_data:
+
+    #Docker -----------------------------------------------
+
+    # An image is a static, read-only template that bundles everything needed to run an application—including the code, system libraries, configuration files, and dependencies
+
+    # A container, on the other hand, is the active, isolated instance created by running that image.
